@@ -14,6 +14,18 @@ namespace Gripper_Design
         {
             InitializeComponent();
         }
+        public PictureBox Set_picture
+        {
+            get
+            {
+                System.Diagnostics.Debug.WriteLine("picture");
+                return this.pictureBox1;
+            }
+            set
+            {
+                this.pictureBox1 = value;
+            }
+        }
         public Label Mass_result
         {
             get
@@ -34,6 +46,17 @@ namespace Gripper_Design
             set
             {
                 this.label6 = value;
+            }
+        }
+        public Label Gripper_type
+        {
+            get
+            {
+                return this.label7;
+            }
+            set
+            {
+                this.label7 = value;
             }
         }
     }

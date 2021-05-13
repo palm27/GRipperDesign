@@ -10,6 +10,7 @@ namespace Gripper_Design
 {
     public partial class OuterShape : UserControl
     {
+        int Shape_index = 0;
         public OuterShape()
         {
             InitializeComponent();
@@ -33,6 +34,23 @@ namespace Gripper_Design
         private void button7_Click(object sender, EventArgs e)
         {
            
+        }
+        public int OuterShape_index
+        {
+            get
+            {
+                //System.Diagnostics.Debug.WriteLine("Mass_1: {0}", Mass_1);
+                return this.Shape_index;
+            }
+            set
+            {
+                this.Shape_index = value;
+            }
+        }
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Shape_index = comboBox1.SelectedIndex;
+            pictureBox1.Image = imageList1.Images[Shape_index];
         }
     }
 }

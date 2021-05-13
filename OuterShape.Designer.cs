@@ -28,12 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OuterShape));
             this.label1 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -49,10 +51,20 @@
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "แนวเรียบระนาบ",
+            "Undercut",
+            "มีส่วนนูนออก",
+            "Bellow",
+            "Undercut + นูน",
+            "นูนออกตลอดตัว",
+            "เว้าจากแนวระนาบ",
+            "Step"});
             this.comboBox1.Location = new System.Drawing.Point(54, 173);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(192, 31);
             this.comboBox1.TabIndex = 1;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -66,6 +78,10 @@
             // comboBox2
             // 
             this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Items.AddRange(new object[] {
+            "ผิวกลึง",
+            "ผิวมีลวดลาย",
+            "ผิวยิงทราย"});
             this.comboBox2.Location = new System.Drawing.Point(54, 275);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(192, 31);
@@ -82,6 +98,19 @@
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
             // 
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "Out_เรียบ.PNG");
+            this.imageList1.Images.SetKeyName(1, "Out_noonเข้า.PNG");
+            this.imageList1.Images.SetKeyName(2, "Out_noonออก.PNG");
+            this.imageList1.Images.SetKeyName(3, "Out_bellow.PNG");
+            this.imageList1.Images.SetKeyName(4, "Out_noon+undercut.PNG");
+            this.imageList1.Images.SetKeyName(5, "Out_เว้าออก.PNG");
+            this.imageList1.Images.SetKeyName(6, "Out_เว้าเข้า.PNG");
+            this.imageList1.Images.SetKeyName(7, "Out_step.PNG");
+            // 
             // OuterShape
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 23F);
@@ -92,7 +121,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label1);
-            this.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(120)))), ((int)(((byte)(138)))));
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "OuterShape";
@@ -111,5 +140,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.ImageList imageList1;
     }
 }

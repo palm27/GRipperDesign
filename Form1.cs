@@ -14,12 +14,22 @@ namespace GRipperDesign
 {
     public partial class Form1 : Form
     {
-        int Count = 0, Count2 = 0, Cavity_mass = 0;
+        int Count = 0, Count2 = 0, Cavity_mass = 0,TopView_index=0;
         int surface_form_index = 0, Demolding_Force = 0, Cup_number = 0, ForceperCup = 0;
         Double Cup_diameter = 0, Force_to_lb = 0, PSI = 88;
         public Form1()
         {
             InitializeComponent();
+        }
+        private int[] Getmodel()
+        {
+            int[] Modelcode = new int[3];
+            Modelcode[0] = outerShape1.OuterShape_index;
+            Modelcode[0] = Modelcode[0] + 1;
+            Modelcode[1] = innerShape1.innerShape_index;
+            Modelcode[2] = upperShape1.upperShape_index;
+            Modelcode[2] = Modelcode[2] + 1;
+            return Modelcode;
         }
         private DataSet GetDataSet(String Type,String NumberofCups, String DiameterOfcup, String cupPrice, String SuctionPrice)
         {
@@ -157,6 +167,12 @@ namespace GRipperDesign
             button10.Hide();
             outerShape1.BringToFront();
         }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            System.Windows.Forms.Application.Exit();
+        }
+
         //Foeward
         private void button7_Click(object sender, EventArgs e)
         {
@@ -174,10 +190,38 @@ namespace GRipperDesign
             }
             if (Count == 3)
             {
-                combineShape1.BringToFront();
-                button7.Hide();
+                topview1.BringToFront();
+               
             }
-            
+            if (Count == 4)
+            {
+                // model
+                int[] Code = Getmodel();
+                System.Diagnostics.Debug.Write("ModelCode :");
+                for (int p = 0; p < 3; p++)
+                {
+                    System.Diagnostics.Debug.Write(Code[p]);
+                }
+                TopView_index = topview1.Topshape.SelectedIndex;
+                if(TopView_index == 0)
+                {
+                    combineShape1.BringToFront();
+                    button7.Hide();
+                    String[] text = new string[3];
+                    text[0] = Code[0].ToString();
+                    text[1] = Code[1].ToString();
+                    text[2] = Code[2].ToString();
+                    Image image = Image.FromFile(@"C:\Users\palmdotax\source\repos\GRipperDesign\Picture\Shape\s" + text[0]+ text[1] + text[2] +".png");
+                    combineShape1.Set_picture.Image = image;
+                }
+                if (TopView_index == 1)
+                {
+                    combineBoxshape1.BringToFront();
+                    button7.Hide();
+                }
+                
+            }
+
         }
         // Back
         private void button8_Click(object sender, EventArgs e)
@@ -197,10 +241,16 @@ namespace GRipperDesign
             if (Count == 2)
             {
                 upperShape1.BringToFront();
-                button7.Show();
+                
 
             }
             if (Count == 3)
+            {
+                topview1.BringToFront();
+                button7.Show();
+
+            }
+            if (Count == 4)
             {
                 combineShape1.BringToFront();
 
@@ -243,25 +293,60 @@ namespace GRipperDesign
         //Save
         private void button9_Click(object sender, EventArgs e)
         {
-            Cavity_mass = combineShape1.Mass_value;
-            System.Diagnostics.Debug.WriteLine("Mass: {0}", Cavity_mass);
-            factor1.Mass_result.Text = Cavity_mass.ToString();
-            Demolding_Force = ForceCavity_calculation(Cavity_mass);
-            System.Diagnostics.Debug.WriteLine("Demolding Force: {0}", Demolding_Force);
-            factor1.DemoldingForce.Text = Demolding_Force.ToString();
-            Cup_number = CupNumber_calculation(900, 550);
-            System.Diagnostics.Debug.WriteLine("Cup Number: {0}", Cup_number);
-            draftVacuumGripper1.NumberOfVacuum.Text = Cup_number.ToString();
-            ForceperCup = ForceCup_calculation(Demolding_Force, Cup_number);
-            Force_to_lb = Convert.ToDouble(ForceperCup);
-            Force_to_lb = Force_to_lb * 0.224;
-            // Fixed Pressure
-           // double PSI = 88;
-            PSI = PSI * 0.145;
-            Cup_diameter = SuctionDiameter_calculation(Force_to_lb, PSI);
-            System.Diagnostics.Debug.WriteLine("Suction Diameter: {0}", Cup_diameter);
-            draftVacuumGripper1.PadDiameter.Text = Cup_diameter.ToString();
             
+            //Gripper
+            int[] Code = Getmodel();
+            if (combineBoxshape1.boxState == 1)
+            {
+                System.Diagnostics.Debug.WriteLine("Vacuum Gripper");
+                factor1.Gripper_type.Text = "Vacuum Gripper";
+
+                Cavity_mass = combineBoxshape1.Mass_value;
+                System.Diagnostics.Debug.WriteLine("Mass: {0}", Cavity_mass);
+                factor1.Mass_result.Text = Cavity_mass.ToString();
+                Demolding_Force = ForceCavity_calculation(Cavity_mass);
+                System.Diagnostics.Debug.WriteLine("Demolding Force: {0}", Demolding_Force);
+                factor1.DemoldingForce.Text = Demolding_Force.ToString();
+                Cup_number = CupNumber_calculation(900, 550);
+                System.Diagnostics.Debug.WriteLine("Cup Number: {0}", Cup_number);
+                draftVacuumGripper1.NumberOfVacuum.Text = Cup_number.ToString();
+                ForceperCup = ForceCup_calculation(Demolding_Force, Cup_number);
+                Force_to_lb = Convert.ToDouble(ForceperCup);
+                Force_to_lb = Force_to_lb * 0.224;
+                // Fixed Pressure
+                // double PSI = 88;
+                PSI = PSI * 0.145;
+                Cup_diameter = SuctionDiameter_calculation(Force_to_lb, PSI);
+                System.Diagnostics.Debug.WriteLine("Suction Diameter: {0}", Cup_diameter);
+                draftVacuumGripper1.PadDiameter.Text = Cup_diameter.ToString();
+
+                Image image = Image.FromFile(@"C:\Users\palmdotax\source\repos\GRipperDesign\Picture\Case1.png");
+                factor1.Set_picture.Image = image;
+            }
+            else if (combineShape1.Support_value == 1)
+            {
+                Cavity_mass = combineShape1.Mass_value;
+                System.Diagnostics.Debug.WriteLine("Rigid Gripper ผังผืด");
+                factor1.Gripper_type.Text = "Rigid Gripper ผังผืด";
+
+                Image image = Image.FromFile(@"C:\Users\palmdotax\source\repos\GRipperDesign\Picture\Gripper ผังผืด.png");
+                factor1.Set_picture.Image = image;
+            }
+            else if (Code[2] == 3)
+            {
+                Cavity_mass = combineShape1.Mass_value;
+                System.Diagnostics.Debug.WriteLine("Rigid Gripper");
+                factor1.Gripper_type.Text = "Rigid Gripper";
+
+                Image image = Image.FromFile(@"C:\Users\palmdotax\source\repos\GRipperDesign\Picture\Rigid Gripper.png");
+                factor1.Set_picture.Image = image;
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("No recommended Gripper");
+                factor1.Gripper_type.Text = "No recommended Gripper";
+            }
+           
         }
         // Gripper
         private void button5_Click(object sender, EventArgs e)

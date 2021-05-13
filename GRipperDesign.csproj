@@ -52,6 +52,12 @@
     <Compile Include="Background.Designer.cs">
       <DependentUpon>Background.cs</DependentUpon>
     </Compile>
+    <Compile Include="CombineBoxshape.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CombineBoxshape.Designer.cs">
+      <DependentUpon>CombineBoxshape.cs</DependentUpon>
+    </Compile>
     <Compile Include="CombineShape.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -102,6 +108,12 @@
     <Compile Include="RubberProperty.Designer.cs">
       <DependentUpon>RubberProperty.cs</DependentUpon>
     </Compile>
+    <Compile Include="Topview.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Topview.Designer.cs">
+      <DependentUpon>Topview.cs</DependentUpon>
+    </Compile>
     <Compile Include="UpperShape.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -110,6 +122,9 @@
     </Compile>
     <EmbeddedResource Include="Background.resx">
       <DependentUpon>Background.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CombineBoxshape.resx">
+      <DependentUpon>CombineBoxshape.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CombineShape.resx">
       <DependentUpon>CombineShape.cs</DependentUpon>
@@ -143,6 +158,9 @@
     </Compile>
     <EmbeddedResource Include="RubberProperty.resx">
       <DependentUpon>RubberProperty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Topview.resx">
+      <DependentUpon>Topview.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UpperShape.resx">
       <DependentUpon>UpperShape.cs</DependentUpon>
