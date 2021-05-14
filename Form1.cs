@@ -1,11 +1,14 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Forms;
 using Microsoft.Office.Interop.Excel;
 using _excel = Microsoft.Office.Interop.Excel;
@@ -17,10 +20,20 @@ namespace GRipperDesign
         int Count = 0, Count2 = 0, Cavity_mass = 0,TopView_index=0;
         int surface_form_index = 0, Demolding_Force = 0, Cup_number = 0, ForceperCup = 0;
         Double Cup_diameter = 0, Force_to_lb = 0, PSI = 88;
+        bool link = false;
         public Form1()
         {
             InitializeComponent();
+            //Thread t1 = new Thread(new ThreadStart(Thread1));
+            //t1.Start();
+            
+
         }
+        
+        //void Thread1()
+        //{
+        //    NewForm.Show();
+        //}
         private int[] Getmodel()
         {
             int[] Modelcode = new int[3];
@@ -158,8 +171,9 @@ namespace GRipperDesign
             button8.Hide();
             button9.Hide();
             button10.Hide();
+           
         }
-
+      
         private void button1_Click(object sender, EventArgs e)
         {
             button7.Show();
@@ -176,6 +190,7 @@ namespace GRipperDesign
         //Foeward
         private void button7_Click(object sender, EventArgs e)
         {
+
             Count++;
             if(Count == 1)
             {
@@ -348,14 +363,16 @@ namespace GRipperDesign
             }
            
         }
-        // Gripper
+        // GripperShow
         private void button5_Click(object sender, EventArgs e)
         {
+            
             button7.Hide();
             button8.Hide();
             button9.Hide();
             button10.Show();
             draftVacuumGripper1.BringToFront();
+           
         }
     }
 }

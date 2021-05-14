@@ -76,6 +76,12 @@
     <Compile Include="Factor.Designer.cs">
       <DependentUpon>Factor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Flat_Suction_cup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Flat_Suction_cup.Designer.cs">
+      <DependentUpon>Flat_Suction_cup.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -120,6 +126,12 @@
     <Compile Include="UpperShape.Designer.cs">
       <DependentUpon>UpperShape.cs</DependentUpon>
     </Compile>
+    <Compile Include="Vacuum Ejector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vacuum Ejector.Designer.cs">
+      <DependentUpon>Vacuum Ejector.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Background.resx">
       <DependentUpon>Background.cs</DependentUpon>
     </EmbeddedResource>
@@ -134,6 +146,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Factor.resx">
       <DependentUpon>Factor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Flat_Suction_cup.resx">
+      <DependentUpon>Flat_Suction_cup.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -164,6 +179,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UpperShape.resx">
       <DependentUpon>UpperShape.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vacuum Ejector.resx">
+      <DependentUpon>Vacuum Ejector.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

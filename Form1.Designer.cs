@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.panel1 = new System.Windows.Forms.Panel();
             this.button6 = new System.Windows.Forms.Button();
@@ -53,6 +54,7 @@
             this.draftVacuumGripper1 = new Gripper_Design.DraftVacuumGripper();
             this.topview1 = new GRipperDesign.Topview();
             this.combineBoxshape1 = new GRipperDesign.CombineBoxshape();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -299,6 +301,7 @@
             this.combineShape1.Mass_value = 0;
             this.combineShape1.Name = "combineShape1";
             this.combineShape1.Size = new System.Drawing.Size(614, 529);
+            this.combineShape1.Support_value = 0;
             this.combineShape1.TabIndex = 7;
             // 
             // upperShape2
@@ -365,10 +368,12 @@
             // combineBoxshape1
             // 
             this.combineBoxshape1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
+            this.combineBoxshape1.boxState = 0;
             this.combineBoxshape1.Cursor = System.Windows.Forms.Cursors.Default;
             this.combineBoxshape1.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold);
             this.combineBoxshape1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(120)))), ((int)(((byte)(138)))));
             this.combineBoxshape1.Location = new System.Drawing.Point(257, 12);
+            this.combineBoxshape1.Mass_value = 0;
             this.combineBoxshape1.Name = "combineBoxshape1";
             this.combineBoxshape1.Size = new System.Drawing.Size(614, 529);
             this.combineBoxshape1.TabIndex = 16;
@@ -377,6 +382,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
             this.ClientSize = new System.Drawing.Size(882, 637);
             this.Controls.Add(this.button10);
@@ -401,6 +407,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panel1.ResumeLayout(false);
@@ -435,6 +442,7 @@
         private System.Windows.Forms.Button button10;
         private Topview topview1;
         private CombineBoxshape combineBoxshape1;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 
