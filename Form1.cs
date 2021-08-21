@@ -12,7 +12,7 @@ using System.Timers;
 using System.Windows.Forms;
 using Microsoft.Office.Interop.Excel;
 using _excel = Microsoft.Office.Interop.Excel;
-
+using System.Data.SqlClient;
 namespace GRipperDesign
 {
     public partial class Form1 : Form
@@ -26,14 +26,15 @@ namespace GRipperDesign
             InitializeComponent();
             //Thread t1 = new Thread(new ThreadStart(Thread1));
             //t1.Start();
-            
+
 
         }
-        
+
         //void Thread1()
         //{
         //    NewForm.Show();
         //}
+        public string conString = "Data Source=DESKTOP-A07LIUV;Initial Catalog=Vacuum_Components;Integrated Security=True";
         private int[] Getmodel()
         {
             int[] Modelcode = new int[3];
@@ -46,15 +47,22 @@ namespace GRipperDesign
         }
         private DataSet GetDataSet(String Type,String NumberofCups, String DiameterOfcup, String cupPrice, String SuctionPrice)
         {
+            int cup_p = 0, Suction_p = 0,total =0;
+            cup_p = int.Parse(cupPrice);
+            Suction_p = int.Parse(SuctionPrice);
+            total = cup_p + Suction_p;
             DataSet ds = new DataSet();
             System.Data.DataTable dtbl = new System.Data.DataTable();
             dtbl.Columns.Add("รายการ");
             dtbl.Columns.Add("รายละเอียด");
             dtbl.Columns.Add("จำนวน");
             dtbl.Columns.Add("ราคา");
+            dtbl.Columns.Add("ภาพ");
+            
 
             dtbl.Rows.Add(Type + "Suction Cup","Cup Diameter" + DiameterOfcup, NumberofCups, cupPrice);
             dtbl.Rows.Add("Vacuum Ejector", "Pressure -88", NumberofCups, SuctionPrice);
+            dtbl.Rows.Add("", "","Total",total.ToString());
             dtbl.TableName = "Table1";
             ds.Tables.Add(dtbl);
             return ds;
@@ -82,16 +90,24 @@ namespace GRipperDesign
                 {
                     for (int n = 0; n < dtbl.Columns.Count; n++)
                     {
-                        inColumn = n + 1;
-                        inRow = inHeaderLength + 2 + m;
+                        inColumn = n + 1;//
+                        inRow = inHeaderLength + 2 + m;//2
                         excelWorkSheet.Cells[inRow, inColumn] = dtbl.Rows[m].ItemArray[n].ToString();
                         if (m % 2 == 0)
-                            excelWorkSheet.get_Range("A" + inRow.ToString(), "G" + inRow.ToString()).Interior.Color = System.Drawing.ColorTranslator.FromHtml("#FCE4D6");
+                            excelWorkSheet.get_Range("A" + inRow.ToString(), "I" + inRow.ToString()).Interior.Color = System.Drawing.ColorTranslator.FromHtml("#FCE4D6");
                     }
+                    _excel.Range RowL = excelWorkSheet.get_Range("A5", "I6");
+                    RowL.EntireRow.RowHeight = 80;
                 }
 
+                
+
+                //merge E4 - I4
+                _excel.Range M = excelWorkSheet.get_Range("E4", "I4");
+                M.Merge(true);
+
                 //Excel Header
-                _excel.Range cellRang = excelWorkSheet.get_Range("A1", "G3");
+                _excel.Range cellRang = excelWorkSheet.get_Range("A1", "I3");
                 cellRang.Merge(false);
                 cellRang.Interior.Color = System.Drawing.Color.White;
                 cellRang.Font.Color = System.Drawing.Color.Gray;
@@ -99,9 +115,12 @@ namespace GRipperDesign
                 cellRang.VerticalAlignment = _excel.XlVAlign.xlVAlignCenter;
                 cellRang.Font.Size = 26;
                 excelWorkSheet.Cells[1, 1] = "GRIPPER DESIGH";
+                excelWorkSheet.Shapes.AddPicture(@"C:\Users\palmdotax\source\repos\GRipperDesign\Picture\Draft\Flat.png", Microsoft.Office.Core.MsoTriState.msoFalse, Microsoft.Office.Core.MsoTriState.msoCTrue, 200, 60, 200, 80);
 
-                //Style table column names
-                cellRang = excelWorkSheet.get_Range("A4", "G4");
+                cellRang.EntireRow.RowHeight = 20;
+
+               //Style table column names
+               cellRang = excelWorkSheet.get_Range("A4", "G4");
                 cellRang.Font.Bold = true;
                 cellRang.Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.White);
                 cellRang.Interior.Color = System.Drawing.ColorTranslator.FromHtml("#ED7D31");
@@ -274,6 +293,7 @@ namespace GRipperDesign
         // B.O.M Print
         private void button10_Click(object sender, EventArgs e)
         {
+
             DataSet DsData = GetDataSet("Flat", Cup_number.ToString(), Cup_diameter.ToString(), "2000", "4000");
             ExportDataSetToExcel(DsData,"BOM.xlxs");
         }
@@ -305,12 +325,39 @@ namespace GRipperDesign
             button10.Hide();
             factor1.BringToFront();
         }
+
+        //เลือก Model Vacuumpads และ ราคา จาก Database
+        void get_vacuumpadData(int Diameter,string types)
+        {
+            //Connect database
+            SqlConnection con = new SqlConnection(conString);
+            con.Open();
+            if (con.State == System.Data.ConnectionState.Open)
+            {
+                
+                //string sql = "SELECT Price FROM tblVacuumpads WHERE Diameter = 8 AND Types = 'Flat' ";
+                string sql = "SELECT Price FROM tblVacuumpads WHERE Diameter = "+Diameter+"AND Types = '"+types+"'";
+                SqlCommand cmd = new SqlCommand(sql, con);
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        System.Diagnostics.Debug.WriteLine(reader[0]);
+                    }
+                }
+                // MessageBox.Show("Success");
+            }
+
+        }
         //Save
         private void button9_Click(object sender, EventArgs e)
         {
-            
+
+            get_vacuumpadData(8,"Bellow");
             //Gripper
             int[] Code = Getmodel();
+            //Vacuum Gripper
             if (combineBoxshape1.boxState == 1)
             {
                 System.Diagnostics.Debug.WriteLine("Vacuum Gripper");
@@ -338,6 +385,7 @@ namespace GRipperDesign
                 Image image = Image.FromFile(@"C:\Users\palmdotax\source\repos\GRipperDesign\Picture\Case1.png");
                 factor1.Set_picture.Image = image;
             }
+            // Gripper แบบผังพืด
             else if (combineShape1.Support_value == 1)
             {
                 Cavity_mass = combineShape1.Mass_value;
@@ -347,6 +395,7 @@ namespace GRipperDesign
                 Image image = Image.FromFile(@"C:\Users\palmdotax\source\repos\GRipperDesign\Picture\Gripper ผังผืด.png");
                 factor1.Set_picture.Image = image;
             }
+            // Rigid Gripper 
             else if (Code[2] == 3)
             {
                 Cavity_mass = combineShape1.Mass_value;

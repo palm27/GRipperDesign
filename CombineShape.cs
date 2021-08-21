@@ -30,10 +30,12 @@ namespace Gripper_Design
             get
             {
                 System.Diagnostics.Debug.WriteLine("Mass_1: {0}", Mass_1);
+
                 return this.Mass_1;
             }
             set
             {
+                System.Diagnostics.Debug.WriteLine("Mass_1: {0}", Mass_1);
                 this.Mass_1 = value;
             }
         }
@@ -53,7 +55,7 @@ namespace Gripper_Design
         {
             get
             {
-                System.Diagnostics.Debug.WriteLine("Mass_1: {0}", Mass_1);
+                
                 return this.pictureBox1;
             }
             set
@@ -66,6 +68,7 @@ namespace Gripper_Design
             if (textBox1.Text != null)
             {
                 Mass_1 = int.Parse(textBox1.Text);
+                System.Diagnostics.Debug.WriteLine("show_Mass: {0}", Mass_1);
             }
         }
 
