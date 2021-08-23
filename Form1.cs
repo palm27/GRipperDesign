@@ -19,6 +19,9 @@ namespace GRipperDesign
     {
         int Count = 0, Count2 = 0, Cavity_mass = 0,TopView_index=0;
         int surface_form_index = 0, Demolding_Force = 0, Cup_number = 0, ForceperCup = 0;
+        int[] betre_diameter = new int[12] { 2, 4, 6, 8, 10, 13, 16, 20, 25, 32, 40, 50 };
+        int Price = 0,PadDiameter =0;
+        string PadSerial = "";
         Double Cup_diameter = 0, Force_to_lb = 0, PSI = 88;
         bool link = false;
         public Form1()
@@ -293,8 +296,8 @@ namespace GRipperDesign
         // B.O.M Print
         private void button10_Click(object sender, EventArgs e)
         {
-
-            DataSet DsData = GetDataSet("Flat", Cup_number.ToString(), Cup_diameter.ToString(), "2000", "4000");
+            Price = Cup_number * Price;
+            DataSet DsData = GetDataSet(PadSerial.ToString(), Cup_number.ToString(), PadDiameter.ToString(), Price.ToString(), "4000");
             ExportDataSetToExcel(DsData,"BOM.xlxs");
         }
 
@@ -329,6 +332,16 @@ namespace GRipperDesign
         //เลือก Model Vacuumpads และ ราคา จาก Database
         void get_vacuumpadData(int Diameter,string types)
         {
+            for(int Num =0; Num<12; Num++)
+            {
+                //System.Diagnostics.Debug.WriteLine(Num);
+                if (betre_diameter[Num] >= Diameter)
+                {
+                    PadDiameter = betre_diameter[Num];
+                    System.Diagnostics.Debug.WriteLine(Diameter);
+                    break;
+                }
+            }
             //Connect database
             SqlConnection con = new SqlConnection(conString);
             con.Open();
@@ -336,17 +349,34 @@ namespace GRipperDesign
             {
                 
                 //string sql = "SELECT Price FROM tblVacuumpads WHERE Diameter = 8 AND Types = 'Flat' ";
-                string sql = "SELECT Price FROM tblVacuumpads WHERE Diameter = "+Diameter+"AND Types = '"+types+"'";
+                string sql = "SELECT PadSerialnumber FROM tblVacuumpads WHERE Diameter = " + Diameter+"AND Types = '"+types+"'";
                 SqlCommand cmd = new SqlCommand(sql, con);
 
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        System.Diagnostics.Debug.WriteLine(reader[0]);
+                        
+                        PadSerial = reader.GetString(0);
+
                     }
                 }
-                // MessageBox.Show("Success");
+
+                //Get Price
+                string sql2 = "SELECT Price FROM tblVacuumpads WHERE Diameter = " + Diameter + "AND Types = '" + types + "'";
+                SqlCommand cmd2 = new SqlCommand(sql2, con);
+
+                using (SqlDataReader reader2 = cmd2.ExecuteReader())
+                {
+                    while (reader2.Read())
+                    {
+
+                        Price = reader2.GetInt32(0);
+                        System.Diagnostics.Debug.WriteLine(Price);
+                    }
+
+                }
+
             }
 
         }
@@ -354,7 +384,7 @@ namespace GRipperDesign
         private void button9_Click(object sender, EventArgs e)
         {
 
-            get_vacuumpadData(8,"Bellow");
+            
             //Gripper
             int[] Code = Getmodel();
             //Vacuum Gripper
@@ -384,6 +414,11 @@ namespace GRipperDesign
 
                 Image image = Image.FromFile(@"C:\Users\palmdotax\source\repos\GRipperDesign\Picture\Case1.png");
                 factor1.Set_picture.Image = image;
+                //Cup
+                int newDiamenter = Convert.ToInt32(Cup_diameter);
+                newDiamenter = newDiamenter * 10;
+                System.Diagnostics.Debug.WriteLine("Convert: {0}", newDiamenter);
+                get_vacuumpadData(newDiamenter, "Flat");
             }
             // Gripper แบบผังพืด
             else if (combineShape1.Support_value == 1)
