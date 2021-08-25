@@ -63,8 +63,8 @@ namespace GRipperDesign
             dtbl.Columns.Add("ภาพ");
             
 
-            dtbl.Rows.Add(Type + "Suction Cup","Cup Diameter" + DiameterOfcup, NumberofCups, cupPrice);
-            dtbl.Rows.Add("Vacuum Ejector", "Pressure -88", NumberofCups, SuctionPrice);
+            dtbl.Rows.Add(Type ,"Cup Diameter: " + DiameterOfcup, NumberofCups, cupPrice);
+            dtbl.Rows.Add("ZH07D", "Pressure: -88", NumberofCups, SuctionPrice);
             dtbl.Rows.Add("", "","Total",total.ToString());
             dtbl.TableName = "Table1";
             ds.Tables.Add(dtbl);
@@ -119,11 +119,31 @@ namespace GRipperDesign
                 cellRang.Font.Size = 26;
                 excelWorkSheet.Cells[1, 1] = "GRIPPER DESIGH";
                 excelWorkSheet.Shapes.AddPicture(@"C:\Users\palmdotax\source\repos\GRipperDesign\Picture\Draft\Flat.png", Microsoft.Office.Core.MsoTriState.msoFalse, Microsoft.Office.Core.MsoTriState.msoCTrue, 200, 60, 200, 80);
-
+                
                 cellRang.EntireRow.RowHeight = 20;
 
-               //Style table column names
-               cellRang = excelWorkSheet.get_Range("A4", "G4");
+                // add Vacuum Ejector pic
+                
+                excelWorkSheet.Shapes.AddPicture(@"C:\Users\palmdotax\source\repos\GRipperDesign\Picture\Draft\Vacuum Ejector.png", Microsoft.Office.Core.MsoTriState.msoFalse, Microsoft.Office.Core.MsoTriState.msoCTrue,200,150,200,80);
+
+                // add Draft design
+                _excel.Range Df = excelWorkSheet.get_Range("A8", "I10");
+                Df.Merge(false);
+                Df.Interior.Color = System.Drawing.Color.White;
+                Df.Font.Color = System.Drawing.Color.Gray;
+                Df.HorizontalAlignment = _excel.XlHAlign.xlHAlignCenter;
+                Df.VerticalAlignment = _excel.XlVAlign.xlVAlignCenter;
+                Df.Font.Size = 26;
+                Df.Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.White);
+                Df.Interior.Color = System.Drawing.ColorTranslator.FromHtml("#ED7D31");
+                excelWorkSheet.Cells[8,1] = "DRAFT DESIGH";
+                //add df pic
+                _excel.Range Dfp = excelWorkSheet.get_Range("A11", "I24");
+                Dfp.Merge(false);
+                excelWorkSheet.Shapes.AddPicture(@"C:\Users\palmdotax\source\repos\GRipperDesign\Picture\Draft\Gripper.png", Microsoft.Office.Core.MsoTriState.msoFalse, Microsoft.Office.Core.MsoTriState.msoCTrue, 1, 300, 200, 80);
+                excelWorkSheet.Shapes.AddPicture(@"C:\Users\palmdotax\source\repos\GRipperDesign\Picture\Draft\Vacuum pad Distance.png", Microsoft.Office.Core.MsoTriState.msoFalse, Microsoft.Office.Core.MsoTriState.msoCTrue, 200, 300, 200, 80); 
+                //Style table column names
+                cellRang = excelWorkSheet.get_Range("A4", "G4");
                 cellRang.Font.Bold = true;
                 cellRang.Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.White);
                 cellRang.Interior.Color = System.Drawing.ColorTranslator.FromHtml("#ED7D31");
