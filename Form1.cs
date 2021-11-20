@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Net.Sockets;
 using System.Windows.Forms;
 using Microsoft.Office.Interop.Excel;
 using _excel = Microsoft.Office.Interop.Excel;
@@ -24,7 +25,18 @@ namespace GRipperDesign
         string PadSerial = "";
         Double Cup_diameter = 0, Force_to_lb = 0, PSI = 88;
         bool link = false;
-        int Box_A = 0, Box_B = 0, Box_C = 0, Box_Area = 0,Hardness =0;
+        int Box_A = 0, Box_B = 0, Box_C = 0, Box_Area = 0,Hardness =0, BoxRegression =0;
+        int demold_f = 0;
+
+        //Socket
+        int port; //Port number of server
+        char message; //Message to send
+        int byteCount; //Raw bytes to send
+        NetworkStream stream; //Link stream
+        NetworkStream stream2; //Link stream
+        byte[] sendData = new byte[5]; //Raw data to send
+        byte[] readData = new byte[1];
+        TcpClient client; //TCP client variable
         public Form1()
         {
             InitializeComponent();
@@ -401,6 +413,85 @@ namespace GRipperDesign
             }
 
         }
+
+        void ConnectSoket()
+        {
+
+            const string Server = "127.0.0.1";
+            port = 8000;
+            //Attemps to make connection
+            try
+            {
+                client = new TcpClient(Server, port);
+                System.Diagnostics.Debug.WriteLine("Success");
+
+            }
+            catch (System.Net.Sockets.SocketException)
+            {
+                //Adds debug to list box and shows message box
+                System.Diagnostics.Debug.WriteLine("Connection Failed");
+
+            }
+
+        }
+        // Regression
+        public int Regression_cal(int Ar, int HN)
+        {
+            // S + area + hardness + CR
+            ushort AValue = Convert.ToUInt16(Ar);
+            byte upperArea = (byte)(AValue >> 8);
+            byte lowerArea = (byte)(AValue & 0xff);
+
+            ushort HNValue = Convert.ToUInt16(HN);
+            byte upperH = (byte)(HN >> 8);
+            byte lowerH = (byte)(HN & 0xff);
+            System.Diagnostics.Debug.WriteLine("up: {0}", upperArea);
+            System.Diagnostics.Debug.WriteLine("low: {0}", lowerArea);
+            
+            // System.Diagnostics.Debug.WriteLine("Connect.....";
+            ConnectSoket();
+            //send
+            try
+            {
+                //message = upperc; //Set message variable to input
+                //byteCount = Encoding.ASCII.GetByteCount(message); //Measures bytes required to send ASCII data
+                //sendData = new byte[byteCount]; //Prepares variable size for required data
+                //sendData = Encoding.ASCII.GetBytes(message); //Sets the sendData variable to the actual binary data (from the ASCII)
+                sendData[0] = 0x53;
+                sendData[1] = upperArea;
+                sendData[2] = lowerArea;
+                sendData[3] = upperH;
+                sendData[4] = lowerH;
+                stream = client.GetStream(); //Opens up the network stream
+                stream.Write(sendData, 0,5); //Transmits data onto the stream
+                //System.Diagnostics.Debug.WriteLine("Massage: {0}", sendData[0]);
+                //System.Diagnostics.Debug.WriteLine("Massage: {0}", sendData[1]);
+                // System.Diagnostics.Debug.WriteLine("bytecount: {0}", byteCount);
+
+            }
+            catch (System.NullReferenceException) //Error if socket not open
+            {
+                //Adds debug to list box and shows message box
+                // MessageBox.Show("Connection not installised");
+                // listBox1.Items.Add("Failed to send data");
+                System.Diagnostics.Debug.WriteLine("Failed to send data");
+            }
+            try
+            {
+                stream2 = client.GetStream();
+                stream2.Read(readData,0,1);
+                System.Diagnostics.Debug.WriteLine("Read: {0}", readData[0]);
+
+            }
+            catch(System.NullReferenceException)
+            {
+                System.Diagnostics.Debug.WriteLine("Failed to Read data");
+            }
+            demold_f = Convert.ToInt32(readData[0]);
+            System.Diagnostics.Debug.WriteLine("Read_INT: {0}", demold_f);
+            System.Diagnostics.Debug.WriteLine("END......");
+            return BoxRegression;
+        }
         //Save
         private void button9_Click(object sender, EventArgs e)
         {
@@ -426,12 +517,16 @@ namespace GRipperDesign
                 Hardness = rubberProperty1.HN_value;
                 System.Diagnostics.Debug.WriteLine("Hardness: {0}", Hardness);
             }
+            Regression_cal(Box_Area, Hardness);
             //Vacuum Gripper
             if (combineBoxshape1.boxState == 1)
             {
+                demold_f = demold_f / 10;
+
                 System.Diagnostics.Debug.WriteLine("Vacuum Gripper");
                 factor1.Gripper_type.Text = "Vacuum Gripper";
                 Cavity_mass = combineBoxshape1.Mass_value;
+                Cavity_mass = Cavity_mass + demold_f;
                 System.Diagnostics.Debug.WriteLine("Mass: {0}", Cavity_mass);
                 factor1.Mass_result.Text = Cavity_mass.ToString();
                 Demolding_Force = ForceCavity_calculation(Cavity_mass);
