@@ -24,6 +24,7 @@ namespace GRipperDesign
         string PadSerial = "";
         Double Cup_diameter = 0, Force_to_lb = 0, PSI = 88;
         bool link = false;
+        int Box_A = 0, Box_B = 0, Box_C = 0, Box_Area = 0,Hardness =0;
         public Form1()
         {
             InitializeComponent();
@@ -355,7 +356,7 @@ namespace GRipperDesign
             for(int Num =0; Num<12; Num++)
             {
                 //System.Diagnostics.Debug.WriteLine(Num);
-                if (betre_diameter[Num] >= Diameter)
+                if (betre_diameter[Num] > Diameter)//
                 {
                     PadDiameter = betre_diameter[Num];
                     System.Diagnostics.Debug.WriteLine(Diameter);
@@ -407,12 +408,29 @@ namespace GRipperDesign
             
             //Gripper
             int[] Code = Getmodel();
+            // Box_area calculator
+            if(combineBoxshape1.boxState2 ==1 && combineBoxshape1.boxState3 == 1 && combineBoxshape1.boxState4 == 1)
+            {
+                Box_A = combineBoxshape1.A_value;
+                System.Diagnostics.Debug.WriteLine("A: {0}", Box_A);
+                Box_B = combineBoxshape1.B_value;
+                System.Diagnostics.Debug.WriteLine("B: {0}", Box_B);
+                Box_C = combineBoxshape1.C_value;
+                System.Diagnostics.Debug.WriteLine("C: {0}", Box_C);
+                Box_Area = (2 * Box_A * Box_B) + (2 * Box_A * Box_C);
+                System.Diagnostics.Debug.WriteLine("Area: {0}", Box_Area);
+            }
+            // Hardness
+            if(rubberProperty1.HNState ==1)
+            {
+                Hardness = rubberProperty1.HN_value;
+                System.Diagnostics.Debug.WriteLine("Hardness: {0}", Hardness);
+            }
             //Vacuum Gripper
             if (combineBoxshape1.boxState == 1)
             {
                 System.Diagnostics.Debug.WriteLine("Vacuum Gripper");
                 factor1.Gripper_type.Text = "Vacuum Gripper";
-
                 Cavity_mass = combineBoxshape1.Mass_value;
                 System.Diagnostics.Debug.WriteLine("Mass: {0}", Cavity_mass);
                 factor1.Mass_result.Text = Cavity_mass.ToString();
