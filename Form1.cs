@@ -185,8 +185,8 @@ namespace GRipperDesign
             public int CupNumber_calculation(int x, int y)
         {
             int xNumber = 0, yNumber = 0, CupNo = 0;
-            xNumber = x / 200;
-            yNumber = y / 200;
+            xNumber = x / 100;
+            yNumber = y / 100;
             CupNo = xNumber * yNumber;
             return CupNo;
         }
@@ -532,8 +532,9 @@ namespace GRipperDesign
                 Demolding_Force = ForceCavity_calculation(Cavity_mass);
                 System.Diagnostics.Debug.WriteLine("Demolding Force: {0}", Demolding_Force);
                 factor1.DemoldingForce.Text = Demolding_Force.ToString();
-                Cup_number = CupNumber_calculation(900, 550);
+                Cup_number = CupNumber_calculation(220, 360);
                 System.Diagnostics.Debug.WriteLine("Cup Number: {0}", Cup_number);
+                draftVacuumGripper1.NumberOfCup.Text = Cup_number.ToString();
                 draftVacuumGripper1.NumberOfVacuum.Text = Cup_number.ToString();
                 ForceperCup = ForceCup_calculation(Demolding_Force, Cup_number);
                 Force_to_lb = Convert.ToDouble(ForceperCup);
