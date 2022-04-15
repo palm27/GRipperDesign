@@ -10,16 +10,11 @@ using System.Windows.Forms;
 
 namespace GRipperDesign
 {
-    public partial class DraftRigid_1 : UserControl
+    public partial class DraftRigid_Support : UserControl
     {
-        public DraftRigid_1()
+        public DraftRigid_Support()
         {
             InitializeComponent();
-        }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

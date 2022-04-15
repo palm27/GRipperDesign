@@ -85,6 +85,12 @@
     <Compile Include="DraftRigid_1.Designer.cs">
       <DependentUpon>DraftRigid_1.cs</DependentUpon>
     </Compile>
+    <Compile Include="DraftRigid_Support.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DraftRigid_Support.Designer.cs">
+      <DependentUpon>DraftRigid_Support.cs</DependentUpon>
+    </Compile>
     <Compile Include="DraftVacuumGripper.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -164,6 +170,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DraftRigid_1.resx">
       <DependentUpon>DraftRigid_1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DraftRigid_Support.resx">
+      <DependentUpon>DraftRigid_Support.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DraftVacuumGripper.resx">
       <DependentUpon>DraftVacuumGripper.cs</DependentUpon>
