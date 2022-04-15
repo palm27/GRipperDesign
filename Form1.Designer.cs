@@ -42,7 +42,10 @@
             this.button8 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.draftRigid_12 = new GRipperDesign.DraftRigid_1();
             this.background1 = new Gripper_Design.Background();
+            this.draftRigid_11 = new GRipperDesign.DraftRigid_1();
             this.innerShape1 = new Gripper_Design.InnerShape();
             this.outerShape1 = new Gripper_Design.OuterShape();
             this.upperShape1 = new Gripper_Design.UpperShape();
@@ -54,13 +57,13 @@
             this.draftVacuumGripper1 = new Gripper_Design.DraftVacuumGripper();
             this.topview1 = new GRipperDesign.Topview();
             this.combineBoxshape1 = new GRipperDesign.CombineBoxshape();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.draftRigid_11);
             this.panel1.Controls.Add(this.button6);
             this.panel1.Controls.Add(this.button5);
             this.panel1.Controls.Add(this.button4);
@@ -244,6 +247,15 @@
             this.button10.UseVisualStyleBackColor = true;
             this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
+            // draftRigid_12
+            // 
+            this.draftRigid_12.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold);
+            this.draftRigid_12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(120)))), ((int)(((byte)(138)))));
+            this.draftRigid_12.Location = new System.Drawing.Point(257, 13);
+            this.draftRigid_12.Name = "draftRigid_12";
+            this.draftRigid_12.Size = new System.Drawing.Size(614, 542);
+            this.draftRigid_12.TabIndex = 17;
+            // 
             // background1
             // 
             this.background1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
@@ -253,6 +265,15 @@
             this.background1.Name = "background1";
             this.background1.Size = new System.Drawing.Size(614, 555);
             this.background1.TabIndex = 1;
+            // 
+            // draftRigid_11
+            // 
+            this.draftRigid_11.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold);
+            this.draftRigid_11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(120)))), ((int)(((byte)(138)))));
+            this.draftRigid_11.Location = new System.Drawing.Point(253, 0);
+            this.draftRigid_11.Name = "draftRigid_11";
+            this.draftRigid_11.Size = new System.Drawing.Size(632, 637);
+            this.draftRigid_11.TabIndex = 17;
             // 
             // innerShape1
             // 
@@ -293,7 +314,14 @@
             // 
             // combineShape1
             // 
+            this.combineShape1.A_value = 0;
+            this.combineShape1.B_value = 0;
             this.combineShape1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
+            this.combineShape1.boxState = 1;
+            this.combineShape1.C_value = 0;
+            this.combineShape1.D_value = 0;
+            this.combineShape1.E_value = 0;
+            this.combineShape1.F_value = 0;
             this.combineShape1.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold);
             this.combineShape1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(120)))), ((int)(((byte)(138)))));
             this.combineShape1.Location = new System.Drawing.Point(257, 12);
@@ -322,6 +350,8 @@
             this.rubberProperty1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
             this.rubberProperty1.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold);
             this.rubberProperty1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(120)))), ((int)(((byte)(138)))));
+            this.rubberProperty1.HN_value = 0;
+            this.rubberProperty1.HNState = 0;
             this.rubberProperty1.Location = new System.Drawing.Point(257, 12);
             this.rubberProperty1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.rubberProperty1.Name = "rubberProperty1";
@@ -367,8 +397,14 @@
             // 
             // combineBoxshape1
             // 
+            this.combineBoxshape1.A_value = 0;
+            this.combineBoxshape1.B_value = 0;
             this.combineBoxshape1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
             this.combineBoxshape1.boxState = 0;
+            this.combineBoxshape1.boxState2 = 0;
+            this.combineBoxshape1.boxState3 = 0;
+            this.combineBoxshape1.boxState4 = 0;
+            this.combineBoxshape1.C_value = 0;
             this.combineBoxshape1.Cursor = System.Windows.Forms.Cursors.Default;
             this.combineBoxshape1.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold);
             this.combineBoxshape1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(120)))), ((int)(((byte)(138)))));
@@ -402,6 +438,7 @@
             this.Controls.Add(this.draftVacuumGripper1);
             this.Controls.Add(this.topview1);
             this.Controls.Add(this.combineBoxshape1);
+            this.Controls.Add(this.draftRigid_12);
             this.Font = new System.Drawing.Font("Century Gothic", 12F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(120)))), ((int)(((byte)(138)))));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -443,6 +480,8 @@
         private Topview topview1;
         private CombineBoxshape combineBoxshape1;
         private System.Windows.Forms.Timer timer1;
+        private DraftRigid_1 draftRigid_11;
+        private DraftRigid_1 draftRigid_12;
     }
 }
 

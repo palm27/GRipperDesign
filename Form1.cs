@@ -27,6 +27,7 @@ namespace GRipperDesign
         bool link = false;
         int Box_A = 0, Box_B = 0, Box_C = 0, Box_Area = 0,Hardness =0, BoxRegression =0;
         int demold_f = 0;
+        int draft_state = 0;
 
         //Socket
         int port; //Port number of server
@@ -34,22 +35,16 @@ namespace GRipperDesign
         int byteCount; //Raw bytes to send
         NetworkStream stream; //Link stream
         NetworkStream stream2; //Link stream
-        byte[] sendData = new byte[5]; //Raw data to send
+        byte[] sendData = new byte[6]; //Raw data to send
         byte[] readData = new byte[1];
         TcpClient client; //TCP client variable
         public Form1()
         {
             InitializeComponent();
-            //Thread t1 = new Thread(new ThreadStart(Thread1));
-            //t1.Start();
-
+     
 
         }
-
-        //void Thread1()
-        //{
-        //    NewForm.Show();
-        //}
+        // database config
         public string conString = "Data Source=DESKTOP-A07LIUV;Initial Catalog=Vacuum_Components;Integrated Security=True";
         private int[] Getmodel()
         {
@@ -435,7 +430,7 @@ namespace GRipperDesign
 
         }
         // Regression
-        public int Regression_cal(int Ar, int HN)
+        public int Regression_cal(int Ar, int HN, int shape)
         {
             // S + area + hardness + CR
             ushort AValue = Convert.ToUInt16(Ar);
@@ -447,7 +442,8 @@ namespace GRipperDesign
             byte lowerH = (byte)(HN & 0xff);
             System.Diagnostics.Debug.WriteLine("up: {0}", upperArea);
             System.Diagnostics.Debug.WriteLine("low: {0}", lowerArea);
-            
+
+            byte Shape = Convert.ToByte(shape);
             // System.Diagnostics.Debug.WriteLine("Connect.....";
             ConnectSoket();
             //send
@@ -462,8 +458,9 @@ namespace GRipperDesign
                 sendData[2] = lowerArea;
                 sendData[3] = upperH;
                 sendData[4] = lowerH;
+                sendData[5] = Shape;
                 stream = client.GetStream(); //Opens up the network stream
-                stream.Write(sendData, 0,5); //Transmits data onto the stream
+                stream.Write(sendData, 0,6); //Transmits data onto the stream
                 //System.Diagnostics.Debug.WriteLine("Massage: {0}", sendData[0]);
                 //System.Diagnostics.Debug.WriteLine("Massage: {0}", sendData[1]);
                 // System.Diagnostics.Debug.WriteLine("bytecount: {0}", byteCount);
@@ -511,16 +508,19 @@ namespace GRipperDesign
                 Box_Area = (2 * Box_A * Box_B) + (2 * Box_A * Box_C);
                 System.Diagnostics.Debug.WriteLine("Area: {0}", Box_Area);
             }
+
             // Hardness
             if(rubberProperty1.HNState ==1)
             {
                 Hardness = rubberProperty1.HN_value;
                 System.Diagnostics.Debug.WriteLine("Hardness: {0}", Hardness);
             }
-            Regression_cal(Box_Area, Hardness);
+           
             //Vacuum Gripper
             if (combineBoxshape1.boxState == 1)
             {
+                draft_state = 1;
+                Regression_cal(Box_Area, Hardness,1);
                 demold_f = demold_f / 10;
 
                 System.Diagnostics.Debug.WriteLine("Vacuum Gripper");
@@ -557,6 +557,7 @@ namespace GRipperDesign
             // Gripper แบบผังพืด
             else if (combineShape1.Support_value == 1)
             {
+                draft_state = 3;
                 Cavity_mass = combineShape1.Mass_value;
                 System.Diagnostics.Debug.WriteLine("Rigid Gripper ผังผืด");
                 factor1.Gripper_type.Text = "Rigid Gripper ผังผืด";
@@ -565,8 +566,10 @@ namespace GRipperDesign
                 factor1.Set_picture.Image = image;
             }
             // Rigid Gripper 
-            else if (Code[2] == 3)
+            else if (Code[2] == 2 || Code[2] == 3)
             {
+                draft_state = 2;
+                Regression_cal(Box_Area, Hardness, 0);
                 Cavity_mass = combineShape1.Mass_value;
                 System.Diagnostics.Debug.WriteLine("Rigid Gripper");
                 factor1.Gripper_type.Text = "Rigid Gripper";
@@ -589,8 +592,22 @@ namespace GRipperDesign
             button8.Hide();
             button9.Hide();
             button10.Show();
-            draftVacuumGripper1.BringToFront();
-           
+            if(draft_state ==1)
+            {
+                System.Diagnostics.Debug.WriteLine("Bring Vacuum Gripper");
+                draftVacuumGripper1.BringToFront();
+            }
+            else if (draft_state == 2)
+            {
+                System.Diagnostics.Debug.WriteLine("Bring Rigid Gripper");
+                draftRigid_12.BringToFront();
+            }
+            else if (draft_state == 3)
+            {
+                System.Diagnostics.Debug.WriteLine("Bring Rigid Gripper with support");
+                draftVacuumGripper1.BringToFront();
+            }
+
         }
     }
 }

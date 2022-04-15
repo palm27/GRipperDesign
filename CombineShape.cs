@@ -10,7 +10,13 @@ namespace Gripper_Design
 {
     public partial class CombineShape : UserControl
     {
-        int Mass_1 = 0, Support =0;
+        int Box1_state = 1,Mass_1 = 0, Support =0;
+        int Box2_state = 0, A = 0;
+        int Box3_state = 0, B = 0;
+        int Box4_state = 0, C = 0;
+        int Box5_state = 0, D = 0;
+        int Box6_state = 0, E = 0;
+        int Box7_state = 0, F = 0;
         public CombineShape()
         {
             InitializeComponent();
@@ -21,9 +27,90 @@ namespace Gripper_Design
 
         }
 
-        private void numericUpDown4_ValueChanged(object sender, EventArgs e)
+        public int boxState
         {
+            get
+            {
+                //System.Diagnostics.Debug.WriteLine("Support_value: {0}", Support_value);
+                return this.Box1_state;
+            }
+            set
+            {
+                this.Box1_state = value;
+            }
+        }
+        
+        public int A_value
+        {
+            get
+            {
 
+                return this.A;
+            }
+            set
+            {
+                this.A = value;
+            }
+        }
+        public int B_value
+        {
+            get
+            {
+
+                return this.B;
+            }
+            set
+            {
+                this.B = value;
+            }
+        }
+        public int C_value
+        {
+            get
+            {
+
+                return this.C;
+            }
+            set
+            {
+                this.C = value;
+            }
+        }
+        public int D_value
+        {
+            get
+            {
+
+                return this.D;
+            }
+            set
+            {
+                this.D = value;
+            }
+        }
+        public int E_value
+        {
+            get
+            {
+
+                return this.E;
+            }
+            set
+            {
+                this.E = value;
+            }
+        }
+        public int F_value
+        {
+            get
+            {
+
+                return this.F;
+            }
+            set
+            {
+                this.F = value;
+            }
         }
         public int Mass_value
         {

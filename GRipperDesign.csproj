@@ -79,6 +79,12 @@
     <Compile Include="CombineShape.Designer.cs">
       <DependentUpon>CombineShape.cs</DependentUpon>
     </Compile>
+    <Compile Include="DraftRigid_1.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DraftRigid_1.Designer.cs">
+      <DependentUpon>DraftRigid_1.cs</DependentUpon>
+    </Compile>
     <Compile Include="DraftVacuumGripper.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -155,6 +161,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CombineShape.resx">
       <DependentUpon>CombineShape.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DraftRigid_1.resx">
+      <DependentUpon>DraftRigid_1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DraftVacuumGripper.resx">
       <DependentUpon>DraftVacuumGripper.cs</DependentUpon>
