@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.draftRigid_11 = new GRipperDesign.DraftRigid_1();
             this.button6 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
@@ -45,7 +46,6 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.draftRigid_12 = new GRipperDesign.DraftRigid_1();
             this.background1 = new Gripper_Design.Background();
-            this.draftRigid_11 = new GRipperDesign.DraftRigid_1();
             this.innerShape1 = new Gripper_Design.InnerShape();
             this.outerShape1 = new Gripper_Design.OuterShape();
             this.upperShape1 = new Gripper_Design.UpperShape();
@@ -57,6 +57,7 @@
             this.draftVacuumGripper1 = new Gripper_Design.DraftVacuumGripper();
             this.topview1 = new GRipperDesign.Topview();
             this.combineBoxshape1 = new GRipperDesign.CombineBoxshape();
+            this.draftRigid_Support1 = new GRipperDesign.DraftRigid_Support();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -76,6 +77,15 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(250, 637);
             this.panel1.TabIndex = 0;
+            // 
+            // draftRigid_11
+            // 
+            this.draftRigid_11.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold);
+            this.draftRigid_11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(120)))), ((int)(((byte)(138)))));
+            this.draftRigid_11.Location = new System.Drawing.Point(253, 0);
+            this.draftRigid_11.Name = "draftRigid_11";
+            this.draftRigid_11.Size = new System.Drawing.Size(632, 637);
+            this.draftRigid_11.TabIndex = 17;
             // 
             // button6
             // 
@@ -266,15 +276,6 @@
             this.background1.Size = new System.Drawing.Size(614, 555);
             this.background1.TabIndex = 1;
             // 
-            // draftRigid_11
-            // 
-            this.draftRigid_11.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold);
-            this.draftRigid_11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(120)))), ((int)(((byte)(138)))));
-            this.draftRigid_11.Location = new System.Drawing.Point(253, 0);
-            this.draftRigid_11.Name = "draftRigid_11";
-            this.draftRigid_11.Size = new System.Drawing.Size(632, 637);
-            this.draftRigid_11.TabIndex = 17;
-            // 
             // innerShape1
             // 
             this.innerShape1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
@@ -414,6 +415,13 @@
             this.combineBoxshape1.Size = new System.Drawing.Size(614, 529);
             this.combineBoxshape1.TabIndex = 16;
             // 
+            // draftRigid_Support1
+            // 
+            this.draftRigid_Support1.Location = new System.Drawing.Point(268, 0);
+            this.draftRigid_Support1.Name = "draftRigid_Support1";
+            this.draftRigid_Support1.Size = new System.Drawing.Size(603, 542);
+            this.draftRigid_Support1.TabIndex = 18;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 23F);
@@ -439,6 +447,7 @@
             this.Controls.Add(this.topview1);
             this.Controls.Add(this.combineBoxshape1);
             this.Controls.Add(this.draftRigid_12);
+            this.Controls.Add(this.draftRigid_Support1);
             this.Font = new System.Drawing.Font("Century Gothic", 12F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(120)))), ((int)(((byte)(138)))));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -482,6 +491,7 @@
         private System.Windows.Forms.Timer timer1;
         private DraftRigid_1 draftRigid_11;
         private DraftRigid_1 draftRigid_12;
+        private DraftRigid_Support draftRigid_Support1;
     }
 }
 

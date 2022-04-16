@@ -18,14 +18,14 @@ namespace GRipperDesign
 {
     public partial class Form1 : Form
     {
-        int Count = 0, Count2 = 0, Cavity_mass = 0,TopView_index=0;
-        int surface_form_index = 0, Demolding_Force = 0, Cup_number = 0, ForceperCup = 0;
+        int Count = 0, Count2 = 0, Cavity_mass = 0,TopView_index=0,surface_form_index = 0;
+        int  Demolding_Force = 0, Cup_number = 0, ForceperCup = 0, GrippingForce=0;
         int[] betre_diameter = new int[12] { 2, 4, 6, 8, 10, 13, 16, 20, 25, 32, 40, 50 };
         int Price = 0,PadDiameter =0;
         string PadSerial = "";
         Double Cup_diameter = 0, Force_to_lb = 0, PSI = 88;
         bool link = false;
-        int Box_A = 0, Box_B = 0, Box_C = 0, Box_Area = 0,Hardness =0, BoxRegression =0;
+        int Box_A = 0, Box_B = 0, Box_C = 0, Box_D = 0, Box_E = 0, Box_F = 0, Cylinder_Area = 0, Box_Area = 0,Hardness =0, BoxRegression =0;
         int demold_f = 0;
         int draft_state = 0;
 
@@ -508,7 +508,36 @@ namespace GRipperDesign
                 Box_Area = (2 * Box_A * Box_B) + (2 * Box_A * Box_C);
                 System.Diagnostics.Debug.WriteLine("Area: {0}", Box_Area);
             }
-
+            // rigid gripper calculator
+            else if(Code[2] == 2 || Code[2] == 3)
+            {
+                Box_A = combineShape1.A_value;
+                System.Diagnostics.Debug.WriteLine("A: {0}", Box_A);
+                Box_B = combineShape1.B_value;
+                System.Diagnostics.Debug.WriteLine("B: {0}", Box_B);
+                Box_C = combineShape1.C_value;
+                System.Diagnostics.Debug.WriteLine("C: {0}", Box_C);
+                Box_D = combineShape1.D_value;
+                System.Diagnostics.Debug.WriteLine("D: {0}", Box_D);
+                Box_E = combineShape1.E_value;
+                System.Diagnostics.Debug.WriteLine("E: {0}", Box_E);
+                Box_F = combineShape1.F_value;
+                System.Diagnostics.Debug.WriteLine("F: {0}", Box_F);
+                if (Box_F == 0)
+                {
+                    Box_B = Box_B / 2;
+                    Box_F = Box_F / 2;
+                    Box_B = Box_B + Box_F;
+                    Cylinder_Area = (int)(2 * 3.14 * Box_B * Box_A);
+                    Cylinder_Area = Cylinder_Area + (int)(3.14* Box_B* Box_B);
+                }
+                else
+                {
+                    Box_B = Box_B / 2;
+                    Cylinder_Area = (int)(2 * 3.14 * Box_B * Box_A);
+                    Cylinder_Area = Cylinder_Area + (int)(3.14 * Box_B * Box_B);
+                }
+            }
             // Hardness
             if(rubberProperty1.HNState ==1)
             {
@@ -569,11 +598,24 @@ namespace GRipperDesign
             else if (Code[2] == 2 || Code[2] == 3)
             {
                 draft_state = 2;
-                Regression_cal(Box_Area, Hardness, 0);
+               
+                Regression_cal(Cylinder_Area, Hardness, 0);
                 Cavity_mass = combineShape1.Mass_value;
+                factor1.Mass_result.Text = Cavity_mass.ToString();
                 System.Diagnostics.Debug.WriteLine("Rigid Gripper");
+                System.Diagnostics.Debug.WriteLine(Cavity_mass);
+                Cavity_mass = Cavity_mass * 10;
+                Demolding_Force = Cavity_mass + demold_f;
+                System.Diagnostics.Debug.WriteLine("Demolding_Force :");
+                System.Diagnostics.Debug.WriteLine(Demolding_Force);
+                factor1.DemoldingForce.Text = Demolding_Force.ToString();
+                
                 factor1.Gripper_type.Text = "Rigid Gripper";
-
+                //gripping force calculator
+                GrippingForce = (int)(Demolding_Force / 0.5);
+                System.Diagnostics.Debug.WriteLine("Gripping Force :");
+                System.Diagnostics.Debug.WriteLine(GrippingForce);
+                draftRigid_12.GrippingForce_Label.Text = GrippingForce.ToString();
                 Image image = Image.FromFile(@"C:\Users\palmdotax\source\repos\GRipperDesign\Picture\Rigid Gripper.png");
                 factor1.Set_picture.Image = image;
             }
@@ -605,7 +647,7 @@ namespace GRipperDesign
             else if (draft_state == 3)
             {
                 System.Diagnostics.Debug.WriteLine("Bring Rigid Gripper with support");
-                draftVacuumGripper1.BringToFront();
+                draftRigid_Support1.BringToFront();
             }
 
         }
