@@ -16,5 +16,27 @@ namespace GRipperDesign
         {
             InitializeComponent();
         }
+        public Label NumberOfGripper
+        {
+            get
+            {
+                return this.label7;
+            }
+            set
+            {
+                this.label7 = value;
+            }
+        }
+        public Label GrippingForce_Label
+        {
+            get
+            {
+                return this.label4;
+            }
+            set
+            {
+                this.label4 = value;
+            }
+        }
     }
 }

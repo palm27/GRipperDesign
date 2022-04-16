@@ -19,7 +19,7 @@ namespace GRipperDesign
     public partial class Form1 : Form
     {
         int Count = 0, Count2 = 0, Cavity_mass = 0,TopView_index=0,surface_form_index = 0;
-        int Demolding_Force = 0, Cup_number = 0, ForceperCup = 0, GrippingForce = 0, cavity_Number = 0;
+        int Demolding_Force = 0, Cup_number = 0, ForceperCup = 0, GrippingForce = 0, cavity_Number = 0 , MoldWith=0,MoldLeght=0;
         int[] betre_diameter = new int[12] { 2, 4, 6, 8, 10, 13, 16, 20, 25, 32, 40, 50 };
         int Price = 0,PadDiameter =0;
         string PadSerial = "";
@@ -509,7 +509,8 @@ namespace GRipperDesign
                 System.Diagnostics.Debug.WriteLine("Area: {0}", Box_Area);
             }
             // rigid gripper calculator
-            else if(Code[2] == 2 || Code[2] == 3)
+            //else if(Code[2] == 2 || Code[2] == 3)
+            else
             {
                 Box_A = combineShape1.A_value;
                 System.Diagnostics.Debug.WriteLine("A: {0}", Box_A);
@@ -586,11 +587,30 @@ namespace GRipperDesign
             // Gripper แบบผังพืด
             else if (combineShape1.Support_value == 1)
             {
+                Regression_cal(Cylinder_Area, Hardness, 0);
                 draft_state = 3;
                 Cavity_mass = combineShape1.Mass_value;
                 System.Diagnostics.Debug.WriteLine("Rigid Gripper ผังผืด");
                 factor1.Gripper_type.Text = "Rigid Gripper ผังผืด";
+                System.Diagnostics.Debug.WriteLine(Cavity_mass);
 
+                Cavity_mass = Cavity_mass * 10;
+                Demolding_Force = Cavity_mass + demold_f;
+                cavity_Number = mold1.Cavity_N;
+                // Number Cal
+                MoldWith = mold1.XMold;
+                MoldWith = (int)(MoldWith / 100);
+                draftRigid_Support1.NumberOfGripper.Text = MoldWith.ToString();
+                //Force Cal
+                Demolding_Force = Demolding_Force * cavity_Number;
+                factor1.DemoldingForce.Text = Demolding_Force.ToString();
+                //gripping force calculator
+                Demolding_Force = Demolding_Force / MoldWith;
+                GrippingForce = (int)(Demolding_Force / 0.5);
+                System.Diagnostics.Debug.WriteLine("Gripping Force :");
+                System.Diagnostics.Debug.WriteLine(GrippingForce);
+                draftRigid_Support1.GrippingForce_Label.Text = GrippingForce.ToString();
+                draftRigid_Support1.NumberOfGripper.Text= MoldWith.ToString();
                 Image image = Image.FromFile(@"C:\Users\palmdotax\source\repos\GRipperDesign\Picture\Gripper ผังผืด.png");
                 factor1.Set_picture.Image = image;
             }
@@ -609,7 +629,6 @@ namespace GRipperDesign
                 System.Diagnostics.Debug.WriteLine("Demolding_Force :");
                 System.Diagnostics.Debug.WriteLine(Demolding_Force);
                 factor1.DemoldingForce.Text = Demolding_Force.ToString();
-                
                 factor1.Gripper_type.Text = "Rigid Gripper";
                 //gripping force calculator
                 GrippingForce = (int)(Demolding_Force / 0.5);
