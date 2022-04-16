@@ -19,7 +19,7 @@ namespace GRipperDesign
     public partial class Form1 : Form
     {
         int Count = 0, Count2 = 0, Cavity_mass = 0,TopView_index=0,surface_form_index = 0;
-        int  Demolding_Force = 0, Cup_number = 0, ForceperCup = 0, GrippingForce=0;
+        int Demolding_Force = 0, Cup_number = 0, ForceperCup = 0, GrippingForce = 0, cavity_Number = 0;
         int[] betre_diameter = new int[12] { 2, 4, 6, 8, 10, 13, 16, 20, 25, 32, 40, 50 };
         int Price = 0,PadDiameter =0;
         string PadSerial = "";
@@ -616,6 +616,9 @@ namespace GRipperDesign
                 System.Diagnostics.Debug.WriteLine("Gripping Force :");
                 System.Diagnostics.Debug.WriteLine(GrippingForce);
                 draftRigid_12.GrippingForce_Label.Text = GrippingForce.ToString();
+                // cavity_Number
+                cavity_Number = mold1.Cavity_N;
+                draftRigid_12.NumberOfGripper.Text = cavity_Number.ToString();
                 Image image = Image.FromFile(@"C:\Users\palmdotax\source\repos\GRipperDesign\Picture\Rigid Gripper.png");
                 factor1.Set_picture.Image = image;
             }

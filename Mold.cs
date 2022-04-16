@@ -10,7 +10,28 @@ namespace Gripper_Design
 {
     public partial class Mold : UserControl
     {
-        int Mass_1 = 0;
+        int Box_state = 0, Cavities = 0;
+        public int Cavity_N
+        {
+            get
+            {
+                System.Diagnostics.Debug.WriteLine("Cavities: {0}", Cavities);
+                return this.Cavities;
+            }
+            set
+            {
+                this.Cavities = value;
+            }
+        }
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            Box_state = 1;
+            if (textBox1.Text != null)
+            {
+                Cavities = int.Parse(textBox1.Text);
+            }
+        }
+
         public Mold()
         {
             InitializeComponent();
