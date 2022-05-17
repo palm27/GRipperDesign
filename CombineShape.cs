@@ -44,7 +44,7 @@ namespace Gripper_Design
         {
             get
             {
-
+                System.Diagnostics.Debug.WriteLine("A: {0}", this.A);
                 return this.A;
             }
             set
@@ -76,6 +76,25 @@ namespace Gripper_Design
                 this.C = value;
             }
         }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+            if (textBox2.Text != null)
+            {
+                A = int.Parse(textBox2.Text);
+                System.Diagnostics.Debug.WriteLine("show_A: {0}", A);
+            }
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+            if (textBox3.Text != null)
+            {
+                B = int.Parse(textBox3.Text);
+                System.Diagnostics.Debug.WriteLine("show_B: {0}", B);
+            }
+        }
+
         public int D_value
         {
             get

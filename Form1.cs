@@ -505,7 +505,8 @@ namespace GRipperDesign
                 System.Diagnostics.Debug.WriteLine("B: {0}", Box_B);
                 Box_C = combineBoxshape1.C_value;
                 System.Diagnostics.Debug.WriteLine("C: {0}", Box_C);
-                Box_Area = (2 * Box_A * Box_B) + (2 * Box_A * Box_C);
+                 Box_Area = (2 * Box_A * Box_B) + (2 * Box_A * Box_C) + (Box_B * Box_C);
+               // Box_Area = (2 * Box_A * Box_B) + (2 * Box_A * Box_C);
                 System.Diagnostics.Debug.WriteLine("Area: {0}", Box_Area);
             }
             // rigid gripper calculator
@@ -557,12 +558,14 @@ namespace GRipperDesign
                 factor1.Gripper_type.Text = "Vacuum Gripper";
                 Cavity_mass = combineBoxshape1.Mass_value;
                 Cavity_mass = Cavity_mass + demold_f;
+
                 System.Diagnostics.Debug.WriteLine("Mass: {0}", Cavity_mass);
                 factor1.Mass_result.Text = Cavity_mass.ToString();
                 Demolding_Force = ForceCavity_calculation(Cavity_mass);
                 System.Diagnostics.Debug.WriteLine("Demolding Force: {0}", Demolding_Force);
                 factor1.DemoldingForce.Text = Demolding_Force.ToString();
                 Cup_number = CupNumber_calculation(220, 360);
+                Cup_number = 6;
                 System.Diagnostics.Debug.WriteLine("Cup Number: {0}", Cup_number);
                 draftVacuumGripper1.NumberOfCup.Text = Cup_number.ToString();
                 draftVacuumGripper1.NumberOfVacuum.Text = Cup_number.ToString();
@@ -606,7 +609,7 @@ namespace GRipperDesign
                 factor1.DemoldingForce.Text = Demolding_Force.ToString();
                 //gripping force calculator
                 Demolding_Force = Demolding_Force / MoldWith;
-                GrippingForce = (int)(Demolding_Force / 0.5);
+                GrippingForce = (int)(Demolding_Force / 0.9); // coef
                 System.Diagnostics.Debug.WriteLine("Gripping Force :");
                 System.Diagnostics.Debug.WriteLine(GrippingForce);
                 draftRigid_Support1.GrippingForce_Label.Text = GrippingForce.ToString();
@@ -626,12 +629,13 @@ namespace GRipperDesign
                 System.Diagnostics.Debug.WriteLine(Cavity_mass);
                 Cavity_mass = Cavity_mass * 10;
                 Demolding_Force = Cavity_mass + demold_f;
+               /// Demolding_Force = Demolding_Force * 60/100;
                 System.Diagnostics.Debug.WriteLine("Demolding_Force :");
                 System.Diagnostics.Debug.WriteLine(Demolding_Force);
                 factor1.DemoldingForce.Text = Demolding_Force.ToString();
                 factor1.Gripper_type.Text = "Rigid Gripper";
                 //gripping force calculator
-                GrippingForce = (int)(Demolding_Force / 0.5);
+                GrippingForce = (int)(Demolding_Force / 0.9);
                 System.Diagnostics.Debug.WriteLine("Gripping Force :");
                 System.Diagnostics.Debug.WriteLine(GrippingForce);
                 draftRigid_12.GrippingForce_Label.Text = GrippingForce.ToString();

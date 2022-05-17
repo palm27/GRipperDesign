@@ -139,6 +139,7 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(150, 32);
             this.textBox2.TabIndex = 6;
+            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // textBox3
             // 
@@ -146,6 +147,7 @@
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(150, 32);
             this.textBox3.TabIndex = 7;
+            this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
             // textBox4
             // 
@@ -191,7 +193,7 @@
             this.checkBox1.Font = new System.Drawing.Font("Century Gothic", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkBox1.Location = new System.Drawing.Point(401, 406);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(110, 44);
+            this.checkBox1.Size = new System.Drawing.Size(100, 43);
             this.checkBox1.TabIndex = 13;
             this.checkBox1.Text = "ผังผืด";
             this.checkBox1.UseVisualStyleBackColor = true;
